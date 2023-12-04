@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/04 16:43:33 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:57:20 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	finit(t_fractol *f)
 			&f->endian);
 	mlx_hook(f->win, ON_DESTROY, 0, destroy, f);
 	mlx_hook(f->win, ON_KEYDOWN, 0, keydown, f);
-	mlx_hook(f->win, ON_KEYUP, 0, keyup, f);
 	mlx_mouse_hook(f->win, mouse_hook, f);
 	mlx_loop_hook(f->mlx, render_next_frame, f);
 }
@@ -48,9 +47,10 @@ static void	finit(t_fractol *f)
 int	printerrormsg(t_fractol *f, int errno)
 {
 	if (errno == 0)
-		printf("Missing or invalid parameter\n - Mandelbrot\n - Julia x y\n");
+		ft_printf("Missing or invalid parameter\n"
+			" - Mandelbrot\n - Julia x y\n");
 	if (errno == 1)
-		printf("Missing or invalid parameter for julia set\n - Julia"
+		ft_printf("Missing or invalid parameter for julia set\n - Julia"
 			" 1.0 1.0");
 	return (destroy(f));
 }
@@ -62,15 +62,15 @@ int	main(int argc, char *argv[])
 	finit(&f);
 	if (argc <= 1)
 		return (printerrormsg(&f, 0));
-	else if (!strcmp(argv[1], "Mandelbrot"))
+	else if (!ft_strncmp(argv[1], "Mandelbrot", 10))
 		f.fractaltype = 1;
-	else if (!strcmp(argv[1], "Julia"))
+	else if (!ft_strncmp(argv[1], "Julia", 5))
 	{
 		if (argc != 4)
 			return (printerrormsg(&f, 1));
 		f.fractaltype = 2;
-		f.xconstant = 0.5;
-		f.yconstant = 0.5;
+		f.xconstant = ft_atod(argv[2]);
+		f.yconstant = ft_atod(argv[3]);
 	}
 	else
 		return (printerrormsg(&f, 0));

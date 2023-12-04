@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:08:41 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/04 16:45:37 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:00:31 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FRACTOL_H
 
 # include <mlx.h>
+# include "libft/libft.h"
 
 typedef struct s_fractol {
 	void	*mlx;
@@ -47,8 +48,6 @@ enum {
 void	draw(t_fractol *f);
 void	my_mlx_pixel_put(t_fractol *f, int x, int y, int color);
 int		keydown(int keycode, t_fractol *f);
-int		keyup(int keycode, t_fractol *f);
-int		mousemove(int x, int y, t_fractol *f);
 int		mouse_hook(int button, int x, int y, t_fractol *f);
 int		render_next_frame(t_fractol *f);
 int		destroy(t_fractol *f);

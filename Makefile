@@ -5,17 +5,27 @@
 
 NAME = fractol
 
+LIB = libft/libft.a
+LIBDIR = ./libft
 SRC = fractol.c events.c set.c
 OBJ = $(SRC:%.c=%.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+all: $(NAME)
 
+$(NAME): $(OBJ) $(LIB)
+	$(CC) $(OBJ) -L$(LIBDIR) -lft -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+
+$(LIB):
+	make -C $(LIBDIR)
 
 clean:
 	rm -rf *.o
+	make -C $(LIBDIR) clean
 
 fclean: clean
 	rm fractol
+	rm $(LIB)
+	
+re: fclean all
