@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:50:21 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/04 16:46:18 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:55:13 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	colorize(t_fractol *f, int i, int j, int n)
 	int			color;
 	int			colorset[3];
 
-	colorset[0] = 0x004f182b;
-	colorset[1] = 0x0024f18;
-	colorset[2] = 0x00aa2e88;
+	colorset[0] = 0x004b0082;
+	colorset[1] = 0x003725a4;
+	colorset[2] = 0x006d05ff;
 	if (n >= 100)
 		color = 0;
 	else
@@ -79,8 +79,8 @@ static void	julia(t_fractol *f, int i, int j)
 
 void	draw(t_fractol *f)
 {
-	int		i;
-	int		j;
+	int		x;
+	int		y;
 	void	(*func)();
 
 	if (f->fractaltype == 1)
@@ -88,12 +88,12 @@ void	draw(t_fractol *f)
 	else if (f->fractaltype == 2)
 		func = julia;
 	mlx_clear_window(f->mlx, f->win);
-	i = -1;
-	while (++i < f->width)
+	x = -1;
+	while (++x < f->width)
 	{
-		j = -1;
-		while (++j < f->height)
-			func(f, i, j);
+		y = -1;
+		while (++y < f->height)
+			func(f, x, y);
 	}
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
 }

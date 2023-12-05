@@ -6,15 +6,18 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/04 17:57:20 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/05 13:30:08 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
+
+int	destroy(t_fractol *f)
+{
+	mlx_destroy_window(f->mlx, f->win);
+	exit(0);
+	return (0);
+}
 
 void	my_mlx_pixel_put(t_fractol *f, int x, int y, int color)
 {
@@ -33,6 +36,8 @@ static void	finit(t_fractol *f)
 	f->zoom = 1;
 	f->xcenter = 0;
 	f->ycenter = 0;
+	f->xconstant = -0.4;
+	f->yconstant = 0.6;
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, f->width, f->height, "Hello world!");
 	f->img = mlx_new_image(f->mlx, f->width, f->height);
@@ -40,6 +45,7 @@ static void	finit(t_fractol *f)
 			&f->endian);
 	mlx_hook(f->win, ON_DESTROY, 0, destroy, f);
 	mlx_hook(f->win, ON_KEYDOWN, 0, keydown, f);
+	mlx_hook(f->win, ON_MOUSEMOVE, 0, mousemove, f);
 	mlx_mouse_hook(f->win, mouse_hook, f);
 	mlx_loop_hook(f->mlx, render_next_frame, f);
 }
@@ -51,7 +57,7 @@ int	printerrormsg(t_fractol *f, int errno)
 			" - Mandelbrot\n - Julia x y\n");
 	if (errno == 1)
 		ft_printf("Missing or invalid parameter for julia set\n - Julia"
-			" 1.0 1.0");
+			" -0.5 0.5");
 	return (destroy(f));
 }
 
@@ -74,6 +80,5 @@ int	main(int argc, char *argv[])
 	}
 	else
 		return (printerrormsg(&f, 0));
-	draw(&f);
 	mlx_loop(f.mlx);
 }

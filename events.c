@@ -6,50 +6,73 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:13:18 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/04 17:55:17 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/05 13:29:48 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-int	destroy(t_fractol *f)
+static int	keydown_extend(int keycode, t_fractol *f)
 {
-	mlx_destroy_window(f->mlx, f->win);
-	exit(0);
+	if (keycode == 15)
+	{
+		f->zoom = 1;
+		f->xcenter = 0;
+		f->ycenter = 0;
+	}
+	else if (keycode == 18 && f->fractaltype != 1)
+	{
+		f->fractaltype = 1;
+		f->zoom = 1;
+	}
+	else if (keycode == 19 && f->fractaltype != 2)
+	{
+		f->fractaltype = 2;
+		f->zoom = 1;
+	}
 	return (0);
 }
 
 int	keydown(int keycode, t_fractol *f)
 {
+	ft_printf("keydown id: %d\n", keycode);
 	if (keycode == 53)
 		return (destroy(f));
 	if (keycode == 36)
+	{
 		if (--(f->run))
 			f->run = 1;
-	if (keycode == 13 || keycode == 126)
+	}
+	else if (keycode == 13 || keycode == 126)
 		f->ycenter -= 0.1 / f->zoom;
-	if (keycode == 1 || keycode == 125)
+	else if (keycode == 1 || keycode == 125)
 		f->ycenter += 0.1 / f->zoom;
-	if (keycode == 0 || keycode == 123)
+	else if (keycode == 0 || keycode == 123)
 		f->xcenter -= 0.1 / f->zoom;
-	if (keycode == 2 || keycode == 124)
+	else if (keycode == 2 || keycode == 124)
 		f->xcenter += 0.1 / f->zoom;
-	if (keycode == 5)
+	else if (keycode == 5)
 		f->zoom *= 1.1;
-	if (keycode == 4)
+	else if (keycode == 4)
 		f->zoom /= 1.1;
-	draw(f);
+	else
+		keydown_extend(keycode, f);
 	return (0);
 }
 
-// int	keyup(int keycode, t_fractol *f)
-// {
-// 	(void)f;
-// 	printf("%d released\n", keycode);
-// 	return (0);
-// }
+int	mousemove(int x, int y, t_fractol *f)
+{
+	if (f->fractaltype == 2)
+	{
+		f->xconstant = (f->xconstant + (double) x / f->width / 100);
+		f->yconstant = (f->yconstant + (double) y / f->height / 100);
+		if (f->xconstant > 1)
+			f->xconstant *= -1;
+		if (f->yconstant > 1)
+			f->yconstant *= -1;
+	}
+	return (0);
+}
 
 int	mouse_hook(int button, int x, int y, t_fractol *f)
 {
@@ -61,19 +84,16 @@ int	mouse_hook(int button, int x, int y, t_fractol *f)
 		f->ycenter += ((double) y / f->height * 4.0 - 2) / f->zoom;
 	}
 	if (button == 5)
-		f->zoom *= 1.1;
+		f->zoom *= 1.5;
 	if (button == 4)
-		f->zoom /= 1.1;
-	draw(f);
+		f->zoom /= 1.5;
 	return (0);
 }
 
 int	render_next_frame(t_fractol *f)
 {
 	if (f->run)
-	{
-		f->zoom *= 1.05;
-		draw(f);
-	}
+		f->zoom *= 1.1;
+	draw(f);
 	return (0);
 }
