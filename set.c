@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:50:21 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/05 12:55:13 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:38:12 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	colorize(t_fractol *f, int i, int j, int n)
 	int			color;
 	int			colorset[3];
 
-	colorset[0] = 0x004b0082;
-	colorset[1] = 0x003725a4;
-	colorset[2] = 0x006d05ff;
+	colorset[0] = 0x0033658A;
+	colorset[1] = 0x0086BBD8;
+	colorset[2] = 0x002f4858;
 	if (n >= 100)
 		color = 0;
 	else

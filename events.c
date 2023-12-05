@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:13:18 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/05 13:29:48 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:25:41 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	keydown_extend(int keycode, t_fractol *f)
 
 int	keydown(int keycode, t_fractol *f)
 {
-	ft_printf("keydown id: %d\n", keycode);
 	if (keycode == 53)
 		return (destroy(f));
 	if (keycode == 36)

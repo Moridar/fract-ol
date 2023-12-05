@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/05 13:30:08 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:46:58 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	finit(t_fractol *f)
 	f->xconstant = -0.4;
 	f->yconstant = 0.6;
 	f->mlx = mlx_init();
-	f->win = mlx_new_window(f->mlx, f->width, f->height, "Hello world!");
+	f->win = mlx_new_window(f->mlx, f->width, f->height, "Fract-ol");
 	f->img = mlx_new_image(f->mlx, f->width, f->height);
 	f->addr = mlx_get_data_addr(f->img, &f->bits_per_pixel, &f->line_length,
 			&f->endian);
@@ -58,6 +58,10 @@ int	printerrormsg(t_fractol *f, int errno)
 	if (errno == 1)
 		ft_printf("Missing or invalid parameter for julia set\n - Julia"
 			" -0.5 0.5");
+	if (errno == 2)
+		return (ft_printf("Controls:\nMove: WASD/Arrows - Mouseclick\n"
+				"Zoom: GH/Mouse Scrolls\nAuto zoom: Enter\n"
+				"Reset: R\nMandelbrot: 1\nJulia: 2\n"));
 	return (destroy(f));
 }
 
@@ -68,9 +72,9 @@ int	main(int argc, char *argv[])
 	finit(&f);
 	if (argc <= 1)
 		return (printerrormsg(&f, 0));
-	else if (!ft_strncmp(argv[1], "Mandelbrot", 10))
+	else if (!ft_strncmp(argv[1], "Mandelbrot", 11))
 		f.fractaltype = 1;
-	else if (!ft_strncmp(argv[1], "Julia", 5))
+	else if (!ft_strncmp(argv[1], "Julia", 6))
 	{
 		if (argc != 4)
 			return (printerrormsg(&f, 1));
@@ -80,5 +84,6 @@ int	main(int argc, char *argv[])
 	}
 	else
 		return (printerrormsg(&f, 0));
+	printerrormsg(&f, 2);
 	mlx_loop(f.mlx);
 }
