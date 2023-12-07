@@ -6,12 +6,11 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:50:21 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/07 12:13:46 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:19:15 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <math.h>
 
 static void	my_mlx_pixel_put(t_fractol *f, int x, int y, int color)
 {

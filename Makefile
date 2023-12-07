@@ -29,3 +29,5 @@ fclean: clean
 	rm $(LIB)
 	
 re: fclean all
+
+.phony:: all clean fclean re
