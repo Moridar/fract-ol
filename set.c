@@ -6,11 +6,20 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:50:21 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/05 14:38:12 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:13:46 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <math.h>
+
+static void	my_mlx_pixel_put(t_fractol *f, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = f->addr + (y * f->line_length + x * (f->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
 
 static void	colorize(t_fractol *f, int i, int j, int n)
 {
@@ -23,7 +32,7 @@ static void	colorize(t_fractol *f, int i, int j, int n)
 	if (n >= 100)
 		color = 0;
 	else
-		color = colorset[n % 3];
+		color = colorset[n % 3] - n * 3;
 	my_mlx_pixel_put(f, i, j, color);
 }
 
@@ -34,8 +43,8 @@ static void	mandelbrot(t_fractol *f, int i, int j)
 	double		y[3];
 	double		tmpx;
 
-	x[0] = (i / (double) f->width * 4.0 - 2) / f->zoom + f->xcenter;
-	y[0] = (j / (double) f->height * 4.0 - 2) / f->zoom + f->ycenter;
+	x[0] = (i / (double) f->width * 4 - 2) / f->zoom + f->xcenter;
+	y[0] = (j / (double) f->height * 4 - 2) / f->zoom + f->ycenter;
 	x[1] = 0;
 	y[1] = 0;
 	x[2] = 0;
@@ -66,7 +75,7 @@ static void	julia(t_fractol *f, int i, int j)
 	x[2] = x[1] * x[1];
 	y[2] = y[1] * y[1];
 	n = 0;
-	while (x[2] + y[2] <= 2 * 2 && n++ <= 100)
+	while (x[2] + y[2] <= 4.0 && n++ <= 100)
 	{
 		tmpx = x[2] - y[2];
 		y[1] = 2 * x[1] * y[1] + y[0];

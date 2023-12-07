@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:13:18 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/05 14:25:41 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:14:55 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ int	keydown(int keycode, t_fractol *f)
 	return (0);
 }
 
-int	mousemove(int x, int y, t_fractol *f)
-{
-	if (f->fractaltype == 2)
-	{
-		f->xconstant = (f->xconstant + (double) x / f->width / 100);
-		f->yconstant = (f->yconstant + (double) y / f->height / 100);
-		if (f->xconstant > 1)
-			f->xconstant *= -1;
-		if (f->yconstant > 1)
-			f->yconstant *= -1;
-	}
-	return (0);
-}
-
 int	mouse_hook(int button, int x, int y, t_fractol *f)
 {
 	(void)x;
@@ -82,9 +68,18 @@ int	mouse_hook(int button, int x, int y, t_fractol *f)
 		f->xcenter += ((double) x / f->width * 4.0 - 2) / f->zoom;
 		f->ycenter += ((double) y / f->height * 4.0 - 2) / f->zoom;
 	}
-	if (button == 5)
+	else if (button == 2 && f->fractaltype == 2)
+	{
+		f->xconstant = (f->xconstant + (double) x / f->width / 300);
+		f->yconstant = (f->yconstant + (double) y / f->height / 100);
+		if (f->xconstant > 1)
+			f->xconstant *= -1;
+		if (f->yconstant > 1)
+			f->yconstant *= -1;
+	}
+	else if (button == 5)
 		f->zoom *= 1.5;
-	if (button == 4)
+	else if (button == 4)
 		f->zoom /= 1.5;
 	return (0);
 }

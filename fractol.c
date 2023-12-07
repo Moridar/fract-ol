@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/05 14:46:58 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2023/12/07 09:49:31 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@ int	destroy(t_fractol *f)
 	mlx_destroy_window(f->mlx, f->win);
 	exit(0);
 	return (0);
-}
-
-void	my_mlx_pixel_put(t_fractol *f, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = f->addr + (y * f->line_length + x * (f->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
 }
 
 static void	finit(t_fractol *f)
@@ -45,12 +37,11 @@ static void	finit(t_fractol *f)
 			&f->endian);
 	mlx_hook(f->win, ON_DESTROY, 0, destroy, f);
 	mlx_hook(f->win, ON_KEYDOWN, 0, keydown, f);
-	mlx_hook(f->win, ON_MOUSEMOVE, 0, mousemove, f);
 	mlx_mouse_hook(f->win, mouse_hook, f);
 	mlx_loop_hook(f->mlx, render_next_frame, f);
 }
 
-int	printerrormsg(t_fractol *f, int errno)
+static int	printerrormsg(t_fractol *f, int errno)
 {
 	if (errno == 0)
 		ft_printf("Missing or invalid parameter\n"
@@ -81,9 +72,13 @@ int	main(int argc, char *argv[])
 		f.fractaltype = 2;
 		f.xconstant = ft_atod(argv[2]);
 		f.yconstant = ft_atod(argv[3]);
+		if ((f.xconstant == 0 && !ft_strchr(argv[2], '0'))
+			|| (f.yconstant == 0 && !ft_strchr(argv[3], '0')))
+			return (printerrormsg(&f, 1));
 	}
 	else
 		return (printerrormsg(&f, 0));
 	printerrormsg(&f, 2);
 	mlx_loop(f.mlx);
+	return (0);
 }
