@@ -5,7 +5,6 @@
 
 NAME = fractol
 
-HEADER = fractol.h
 LIB = libft/libft.a
 LIBDIR = ./libft
 SRC = fractol.c events.c set.c
@@ -16,7 +15,7 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIB)
-	$(CC) $(OBJ) -L$(LIBDIR) -lft -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIBDIR) -lft -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 $(LIB):
 	make -C $(LIBDIR)

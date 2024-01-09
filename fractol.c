@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/07 09:49:31 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:02:50 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ static int	printerrormsg(t_fractol *f, int errno)
 		ft_printf("Missing or invalid parameter for julia set\n - Julia"
 			" -0.5 0.5");
 	if (errno == 2)
-		return (ft_printf("Controls:\nMove: WASD/Arrows - Mouseclick\n"
-				"Zoom: GH/Mouse Scrolls\nAuto zoom: Enter\n"
-				"Reset: R\nMandelbrot: 1\nJulia: 2\n"));
+		return (ft_printf("Controls:\nWASD/Arrows: Move\n"
+				"GH: Zoom\nEnter: Auto zoom\nR: Reset\n"
+				"Mouse Scrolls: Zoom\n"
+				"Mouse Left Click: Move\n"
+				"Mouse Right Click: Increase Julia values\n"
+				"1: Mandelbrot\n2: Julia\n"));
 	return (destroy(f));
 }
 
