@@ -1,10 +1,11 @@
 # Makefile for fract-ol
-# Auother: Bobbie Syvasalmi
+# Author: Bobbie Syvasalmi
 # Version 1.0
 # Date: 27/11/2023
 
 NAME = fractol
 
+HEADER = fractol.h
 LIB = libft/libft.a
 LIBDIR = ./libft
 SRC = fractol.c events.c set.c
@@ -21,12 +22,12 @@ $(LIB):
 	make -C $(LIBDIR)
 
 clean:
-	rm -rf *.o
-	make -C $(LIBDIR) clean
+	@rm -rf *.o
+	@make -C $(LIBDIR) clean
 
 fclean: clean
-	rm fractol
-	rm $(LIB)
+	@rm -f fractol
+	@rm -f $(LIB)
 	
 re: fclean all
 
