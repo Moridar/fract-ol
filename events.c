@@ -6,11 +6,18 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:13:18 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/07 12:14:55 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:56:26 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+int	destroy(t_fractol *f)
+{
+	mlx_destroy_window(f->mlx, f->win);
+	exit(0);
+	return (0);
+}
 
 static int	keydown_extend(int keycode, t_fractol *f)
 {

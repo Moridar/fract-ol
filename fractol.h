@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:08:41 by bsyvasal          #+#    #+#             */
-/*   Updated: 2023/12/07 09:49:18 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:56:22 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <mlx.h>
 # include "libft/libft.h"
 
-typedef struct s_fractol {
+typedef struct s_fractol
+{
 	void	*mlx;
 	void	*win;
 	void	*img;
@@ -35,7 +36,8 @@ typedef struct s_fractol {
 	double	xconstant;
 }				t_fractol;
 
-enum {
+enum
+{
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
 	ON_MOUSEDOWN = 4,
