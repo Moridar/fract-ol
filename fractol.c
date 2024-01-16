@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2024/01/16 14:45:45 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:49:29 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	str_isdouble(char *str)
 		{
 			++decimal_used;
 			str++;
+			if (!*str)
+				return (1);
 		}
 		if (!ft_isdigit(*str) || decimal_used > 1)
 			return (0);
