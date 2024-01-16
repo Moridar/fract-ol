@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:13:18 by bsyvasal          #+#    #+#             */
-/*   Updated: 2024/01/11 10:56:26 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:36:13 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int	destroy(t_fractol *f)
 {
-	mlx_destroy_window(f->mlx, f->win);
+	if (!f)
+		exit(1);
+	if (f->img && f->mlx)
+		mlx_destroy_image(f->mlx, f->img);
+	if (f->win && f->mlx)
+		mlx_destroy_window(f->mlx, f->win);
 	exit(0);
 	return (0);
 }
