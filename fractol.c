@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2024/01/11 11:32:58 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:45:45 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ int	str_isdouble(char *str)
 
 static int	print_msg(int msgno)
 {
-	if (msgno == 0)
+	if (msgno == 1)
 		ft_printf("Missing or invalid parameter\n"
 			" - Mandelbrot\n - Julia x y\n");
-	if (msgno == 1)
+	if (msgno == 2)
 		ft_printf("Missing or invalid parameter for julia set\n - Julia"
 			" -0.5 0.5\n");
-	if (msgno == 2)
-		ft_printf("Controls:\nWASD/Arrows: Move\n"
-			"GH: Zoom\nEnter: Auto zoom\nR: Reset\n"
-			"Mouse Scrolls: Zoom\n"
-			"Mouse Left Click: Move\n"
-			"Mouse Right Click: Increase Julia values\n"
-			"1: Mandelbrot\n2: Julia\n");
-	return (0);
+	if (msgno == 3)
+		ft_printf("Controls:\nWASD/Arrows:\tMove\n"
+			"GH:\t\tZoom\nEnter:\t\tAuto zoom\nR:\t\tReset\n"
+			"Mouse Scrolls:\tZoom\n"
+			"Mouse LClick:\tMove\n"
+			"Mouse RClick:\tIncrease Julia values\n"
+			"1:\t\tMandelbrot\n2:\t\tJulia\n");
+	return (msgno);
 }
 
 static void	f_init(t_fractol *f, int type)
@@ -60,11 +60,8 @@ static void	f_init(t_fractol *f, int type)
 	f->zoom = 1;
 	f->xcenter = 0;
 	f->ycenter = 0;
-	if (type != 2)
-	{
-		f->xconstant = -0.4;
-		f->yconstant = 0.6;
-	}
+	f->xconstant = -0.4;
+	f->yconstant = 0.6;
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, f->width, f->height, "Fract-ol");
 	f->img = mlx_new_image(f->mlx, f->width, f->height);
@@ -74,23 +71,25 @@ static void	f_init(t_fractol *f, int type)
 	mlx_hook(f->win, ON_KEYDOWN, 0, keydown, f);
 	mlx_mouse_hook(f->win, mouse_hook, f);
 	mlx_loop_hook(f->mlx, render_next_frame, f);
-	print_msg(2);
-	mlx_loop(f->mlx);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_fractol	f;
 
-	if (!ft_strncmp(argv[1], "Mandelbrot", 11))
+	if (argc < 2)
+		return (print_msg(1));
+	else if (!ft_strncmp(argv[1], "Mandelbrot", 11))
 		f_init(&f, 1);
 	else if (!ft_strncmp(argv[1], "Julia", 6))
 	{
 		if (argc != 4 || !str_isdouble(argv[2]) || !str_isdouble(argv[3]))
-			return (print_msg(1));
+			return (print_msg(2));
+		f_init(&f, 2);
 		f.xconstant = ft_atod(argv[2]);
 		f.yconstant = ft_atod(argv[3]);
-		f_init(&f, 2);
 	}
-	return (print_msg(0));
+	print_msg(3);
+	mlx_loop(f.mlx);
+	return (0);
 }
