@@ -6,7 +6,7 @@
 /*   By: bsyvasal <bsyvasal@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:51:59 by bsyvasal          #+#    #+#             */
-/*   Updated: 2024/01/16 14:49:29 by bsyvasal         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:59:09 by bsyvasal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	str_isdouble(char *str)
 	{
 		if (*str == ',' || *str == '.')
 		{
-			++decimal_used;
-			str++;
-			if (!*str)
+			if (decimal_used++)
+				return (0);
+			if (!*++str)
 				return (1);
 		}
-		if (!ft_isdigit(*str) || decimal_used > 1)
+		if (!ft_isdigit(*str))
 			return (0);
 		str++;
 	}
@@ -79,11 +79,9 @@ int	main(int argc, char *argv[])
 {
 	t_fractol	f;
 
-	if (argc < 2)
-		return (print_msg(1));
-	else if (!ft_strncmp(argv[1], "Mandelbrot", 11))
+	if (argc == 2 && !ft_strncmp(argv[1], "Mandelbrot", 11))
 		f_init(&f, 1);
-	else if (!ft_strncmp(argv[1], "Julia", 6))
+	else if (argc > 1 && !ft_strncmp(argv[1], "Julia", 6))
 	{
 		if (argc != 4 || !str_isdouble(argv[2]) || !str_isdouble(argv[3]))
 			return (print_msg(2));
@@ -91,6 +89,8 @@ int	main(int argc, char *argv[])
 		f.xconstant = ft_atod(argv[2]);
 		f.yconstant = ft_atod(argv[3]);
 	}
+	else
+		return (print_msg(1));
 	print_msg(3);
 	mlx_loop(f.mlx);
 	return (0);
